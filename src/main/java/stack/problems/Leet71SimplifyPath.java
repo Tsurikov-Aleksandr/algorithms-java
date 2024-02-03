@@ -2,53 +2,54 @@ package stack.problems;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Objects;
 
 public class Leet71SimplifyPath {
     public static String simplifyPath(String path) {
 
         Deque<String> stack = new ArrayDeque<>();
-        String cur = "";
+
+        StringBuilder cur2 = new StringBuilder();
+
         path += "/";
 
         for (int i = 0; i < path.length(); i++) {
             char x = path.charAt(i);
             if (x == '/') {
-                if (cur.equals("..")) {
+                if (cur2.toString().equals("..")) {
                     if (!(stack.isEmpty())) {
                         stack.pop();
                     }
-                } else if (!(Objects.equals(cur, "")) && (!Objects.equals(cur, "."))) {
-                    stack.push(cur);
+                } else if (!cur2.toString().isEmpty() && !cur2.toString().equals(".")) {
+                    stack.push(cur2.toString());
                 }
-                cur = "";
+                cur2.setLength(0);
 
             } else {
-                cur += x;
-                System.out.println(cur);
+                cur2.append(x);
+
             }
         }
 
-        if(stack.isEmpty()){
+        if (stack.isEmpty()) {
             return "/";
         }
 
-        String answer = "";
-
         for (String w : stack) {
-            answer = "/" + w + answer;
+            cur2.insert(0, w);
+            cur2.insert(0, "/");
         }
 
-        return answer;
+        return cur2.toString();
     }
 
     public static void main(String[] args) {
-        String p1 = "/../abc//./def/";
-        String ps1 = "/abc/def";
+        String p1 = "/../abc//./def/"; // "/abc/def"
+        String p2 = "/a/b/c/../.."; // "/a"
 
-        String p2 = "/a/b/c/../..";
-        String ps2 = "/a";
+        String pl1 = "/home/";      // "/home"
+        String pl2 = "/../";        // "/"
+        String pl3 = "/home//foo/"; // "/home/foo"
 
-        System.out.println(simplifyPath(p1));
+        System.out.println(simplifyPath(pl3));
     }
 }
