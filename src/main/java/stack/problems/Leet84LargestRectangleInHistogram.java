@@ -4,21 +4,27 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class Leet84LargestRectangleInHistogram {
+    public record Pair(int index, int height) {
+    }
 
     public static int largestRectangleArea(int[] heights) {
-        int ans = 0;
-        Deque<Integer> stack = new ArrayDeque<>();
+        int answer = 0;
+        Deque<Pair> stack = new ArrayDeque<>();
 
-        for (int i = 0; i <= heights.length; ++i) {
-            while (!stack.isEmpty() && (i == heights.length || heights[stack.peek()] > heights[i])) {
-                final int h = heights[stack.pop()];
-                final int w = stack.isEmpty() ? i : i - stack.peek() - 1;
-                ans = Math.max(ans, h * w);
+        for (int i = 0; i < heights.length; i++) {
+            int start = i;
+            while (!stack.isEmpty() && stack.peek().height() > heights[i]) {
+                Pair prew = stack.pop();
+                answer = Math.max(answer, prew.height() * (i - prew.index()));
+                start = prew.index();
             }
-            stack.push(i);
+            stack.push(new Pair(start, heights[i]));
         }
 
-        return ans;
+        for (Pair p : stack) {
+            answer = Math.max(answer, p.height * (heights.length - p.index()));
+        }
+        return answer;
     }
 
     public static void main(String[] args) {
