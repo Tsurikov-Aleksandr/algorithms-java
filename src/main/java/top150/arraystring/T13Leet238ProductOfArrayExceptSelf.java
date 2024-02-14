@@ -1,3 +1,5 @@
+package top150.arraystring;
+
 import java.util.Arrays;
 
 public class T13Leet238ProductOfArrayExceptSelf {

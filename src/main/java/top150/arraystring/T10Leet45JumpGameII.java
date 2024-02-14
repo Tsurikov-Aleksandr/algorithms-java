@@ -1,3 +1,5 @@
+package top150.arraystring;
+
 public class T10Leet45JumpGameII {
     public static int jump(int[] nums) {
         int numberSteps = 0;

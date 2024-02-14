@@ -1,3 +1,5 @@
+package top150.arraystring;
+
 public class T9Leet55JumpGame {
     public static boolean canJump(int[] nums) {
         if (nums.length <= 1) {

@@ -1,3 +1,5 @@
+package top150.arraystring;
+
 public class T3Leet26RemoveDuplicatesFromSortedArray {
     public int removeDuplicates(int[] nums) {
         int p = 0;

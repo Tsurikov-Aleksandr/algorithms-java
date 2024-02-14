@@ -1,3 +1,5 @@
+package top150.arraystring;
+
 public class T2Leet27RemoveElement {
     public static int removeElement(int[] nums, int val) {
         int index = 0;

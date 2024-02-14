@@ -1,3 +1,5 @@
+package top150.arraystring;
+
 public class T4leet80RemoveDuplicatesFromSortedArrayII {
     public static int removeDuplicates(int[] nums) {
         if (nums.length < 3) {

@@ -1,3 +1,5 @@
+package top150.arraystring;
+
 public class T8Leet122BestTimeToBuyandSellStockII {
     public int maxProfit(int[] prices) {
         int maxP = 0;
