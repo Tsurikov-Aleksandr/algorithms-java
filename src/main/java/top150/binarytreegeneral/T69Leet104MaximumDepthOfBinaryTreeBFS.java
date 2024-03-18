@@ -10,18 +10,18 @@ public class T69Leet104MaximumDepthOfBinaryTreeBFS {
         }
 
         Deque<TreeNode> deque = new ArrayDeque<>();
-        deque.add(root);
+        deque.addLast(root);
         int level = 0;
 
         while (!deque.isEmpty()) {
             int size = deque.size();
             for (int i = 0; i < size; i++) {
-                TreeNode node = deque.poll();
+                TreeNode node = deque.pollFirst();
                 if (node.left != null) {
-                    deque.add(node.left);
+                    deque.addLast(node.left);
                 }
                 if (node.right != null) {
-                    deque.add(node.right);
+                    deque.addLast(node.right);
                 }
 
             }
