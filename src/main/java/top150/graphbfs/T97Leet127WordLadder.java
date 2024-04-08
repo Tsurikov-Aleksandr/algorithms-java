@@ -1,56 +1,50 @@
 package top150.graphbfs;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class T97Leet127WordLadder {
-    public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-        if (!wordList.contains(endWord)) {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> wordSet = new HashSet<>(wordList);
+        if (!wordSet.contains(endWord))
             return 0;
-        }
-        Set<String> beginSet = new HashSet<>();
-        Set<String> endSet = new HashSet<>();
+        // 3. Use set instead of queue during bfs
+        Set<String> forwardSet = new HashSet<>();
+        Set<String> backwardSet = new HashSet<>();
+        forwardSet.add(beginWord);
+        backwardSet.add(endWord);
+        wordSet.remove(endWord);
+        wordSet.remove(beginWord);
+        // 1. Search from entry and exit simultaneously
+        return transform(forwardSet, backwardSet, wordSet);
+    }
 
-        int len = 1;
-        int strLen = beginWord.length();
-        Set<String> visited = new HashSet<>();
-
-        beginSet.add(beginWord);
-        endSet.add(endWord);
-        while (!beginSet.isEmpty() && !endSet.isEmpty()) {
-            if (beginSet.size() > endSet.size()) {
-                Set<String> set = beginSet;
-                beginSet = endSet;
-                endSet = set;
-            }
-
-            Set<String> temp = new HashSet<>();
-            for (String word : beginSet) {
-                char[] chs = word.toCharArray();
-
-                for (int i = 0; i < chs.length; i++) {
-                    for (char c = 'a'; c <= 'z'; c++) {
-                        char old = chs[i];
-                        chs[i] = c;
-                        String target = String.valueOf(chs);
-
-                        if (endSet.contains(target)) {
-                            return len + 1;
-                        }
-
-                        if (!visited.contains(target) && wordList.contains(target)) {
-                            temp.add(target);
-                            visited.add(target);
-                        }
-                        chs[i] = old;
+    public int transform(Set<String> forwardSet, Set<String> backwardSet, Set<String> wordSet) {
+        Set<String> newSet = new HashSet<>();
+        for (String fs : forwardSet) {
+            char[] wordArray = fs.toCharArray();
+            for (int i = 0; i < wordArray.length; i++) {
+                for (int c = 'a'; c <= 'z'; c++) {
+                    char origin = wordArray[i];
+                    wordArray[i] = (char) c;
+                    String target = String.valueOf(wordArray);
+                    if (backwardSet.contains(target))
+                        return 2; // stop bfs when entry and exits meet
+                    else if (wordSet.contains(target) && !forwardSet.contains(target)) {
+                        wordSet.remove(target); // 4. Remove visited word from wordList to decrease the search time
+                        newSet.add(target);
                     }
+                    wordArray[i] = origin;
                 }
             }
-
-            beginSet = temp;
-            len++;
         }
-
-        return 0;
+        if (newSet.isEmpty())
+            return 0;
+        forwardSet = newSet;
+        // 2. Pick the queue with less elements to bfs
+        int result = forwardSet.size() > backwardSet.size() ?
+                transform(backwardSet, forwardSet, wordSet) : transform(forwardSet, backwardSet, wordSet);
+        return result == 0 ? 0 : result + 1;
     }
 }
