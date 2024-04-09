@@ -5,9 +5,9 @@ class TrieNode {
     public boolean isWord;
     public TrieNode[] children = new TrieNode[26];
     public TrieNode() {}
-    TrieNode(char c){
-        TrieNode node = new TrieNode();
-        node.val = c;
+
+    public TrieNode(char c) {
+        this.val = c;
     }
 }
 
@@ -34,7 +34,9 @@ public class Trie {
         TrieNode ws = root;
         for(int i = 0; i < word.length(); i++){
             char c = word.charAt(i);
-            if(ws.children[c - 'a'] == null) return false;
+            if (ws.children[c - 'a'] == null) {
+                return false;
+            }
             ws = ws.children[c - 'a'];
         }
         return ws.isWord;
@@ -44,7 +46,9 @@ public class Trie {
         TrieNode ws = root;
         for(int i = 0; i < prefix.length(); i++){
             char c = prefix.charAt(i);
-            if(ws.children[c - 'a'] == null) return false;
+            if (ws.children[c - 'a'] == null) {
+                return false;
+            }
             ws = ws.children[c - 'a'];
         }
         return true;
