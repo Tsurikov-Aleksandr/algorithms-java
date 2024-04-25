@@ -1,6 +1,6 @@
 package top150.binarysearch;
 
-public class T119Leet4MedianOfTwoSortedArrays {
+public class T120Leet4MedianOfTwoSortedArrays {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         if (nums1 == null && nums2 == null) {
             return 0;
