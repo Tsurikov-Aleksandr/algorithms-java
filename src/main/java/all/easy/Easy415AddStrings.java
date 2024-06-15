@@ -4,7 +4,7 @@ public class Easy415AddStrings {
     public String addStrings(String num1, String num2) {
         int point1 = num1.length() - 1;
         int point2 = num2.length() - 1;
-        StringBuilder st = new StringBuilder();
+        StringBuilder st = new StringBuilder(point1 > point2 ? point1 + 1 : point2 + 1);
         int next = 0;
 
         while (point1 >= 0 && point2 >= 0) {
@@ -12,7 +12,7 @@ public class Easy415AddStrings {
             int n2 = num2.charAt(point2) - '0';
             int cur = (n1 + n2 + next) % 10;
             next = (n1 + n2 + next) / 10;
-            st.insert(0, cur);
+            st.append(cur);
             point1--;
             point2--;
         }
@@ -21,7 +21,7 @@ public class Easy415AddStrings {
             int n1 = num1.charAt(point1) - '0';
             int cur = (n1 + next) % 10;
             next = (n1 + next) / 10;
-            st.insert(0, cur);
+            st.append(cur);
             point1--;
         }
 
@@ -29,13 +29,15 @@ public class Easy415AddStrings {
             int n2 = num2.charAt(point2) - '0';
             int cur = (n2 + next) % 10;
             next = (n2 + next) / 10;
-            st.insert(0, cur);
+            st.append(cur);
             point2--;
         }
 
-        if(next != 0){
-            st.insert(0, next);
+        if (next != 0) {
+            st.append(next);
         }
+
+        st.reverse();
 
         return st.toString();
     }
