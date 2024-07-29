@@ -3,38 +3,25 @@ package leet75;
 public class T75Leet547NumberOfProvinces {
     public int findCircleNum(int[][] isConnected) {
         int provinces = 0;
-        for (int i = 0; i < isConnected.length; i++) {
-            for (int j = 0; j < isConnected[i].length; j++) {
-                if (isConnected[i][j] == 1) {
-                    provinces++;
-                    changeToZero(i, j, isConnected);
-                }
+        int n = isConnected.length;
+        boolean[] vis = new boolean[n];
+
+        for (int i = 0; i < n; i++) {
+            if (!vis[i]) {
+                dfs(i, isConnected, vis);
+                provinces++;
             }
         }
 
         return provinces;
     }
 
-    private void changeToZero(int x, int y, int[][] matrix) {
-        if (matrix[x][y] == 0) {
-            return;
-        }
-
-        matrix[x][y] = 0;
-        matrix[y][x] = 0;
+    public void dfs(int node, int[][] matrix, boolean[] vis) {
+        vis[node] = true;
 
         for (int i = 0; i < matrix.length; i++) {
-            if (matrix[x][i] == 1) {
-                changeToZero(x, i, matrix);
-            }
-            if (matrix[i][y] == 1) {
-                changeToZero(i, y, matrix);
-            }
-            if (matrix[y][i] == 1) {
-                changeToZero(y, i, matrix);
-            }
-            if (matrix[i][x] == 1) {
-                changeToZero(i, x, matrix);
+            if (matrix[node][i] == 1 && !vis[i]) {
+                dfs(i, matrix, vis);
             }
         }
     }
