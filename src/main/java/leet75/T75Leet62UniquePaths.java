@@ -1,3 +1,5 @@
+package leet75;
+
 public class T75Leet62UniquePaths {
     public int uniquePaths(int m, int n) {
         // Create a 2D array
